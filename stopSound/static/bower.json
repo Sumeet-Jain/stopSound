@@ -1,0 +1,22 @@
+{
+  "name": "stopSound",
+  "version": "0.0.0",
+  "authors": [
+    "Sumeet Jain <sumeetjain@berkeley.edu>"
+  ],
+  "description": "stopSounds deps",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.2.0",
+    "jquery-cookie": "~1.4.1",
+    "jquery-serialize-object": "~2.4.3"
+  }
+}

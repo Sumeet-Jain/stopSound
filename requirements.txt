@@ -1,0 +1,11 @@
+Django==1.7
+argparse==1.2.1
+django-bootstrap-form==3.1
+django-phonenumber-field==0.6
+gunicorn==19.1.1
+ipdb==0.8
+ipython==2.3.0
+phonenumbers==6.3.0
+pygooglevoice==0.5
+static3==0.5.1
+wsgiref==0.1.2

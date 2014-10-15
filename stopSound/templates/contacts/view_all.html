@@ -1,0 +1,55 @@
+{% extends "base/base.html" %}
+{% load bootstrap %}
+{% load staticfiles %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table">
+        <thead> 
+          <tr>
+            <th> Name </th>
+            <th> Number </th>
+            <th> Will Get Messages </th>
+          </thead>
+          <tbody>
+            {% for contact in contacts %}
+            <tr>
+              <td> {{ contact.name }} </td>
+              <td> {{ contact.phone_number }} </td>
+              <td> {{ contact.is_active }} </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  <div class="modal fade" id="add-contact-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Add new contact</h4>
+        </div>
+        <div class="modal-body">
+          <form id="contact-form" method="post" action='{% url "add_contact" %}'>
+            <img id="spinner-modal" src="{% static "img/spinner.gif" %}"> </img>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <input id="submit-contact-form" type="submit" class="btn btn-primary" value="Save contact">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <button type="button" id="add-contact" class="btn btn-primary" data-toggle="modal" data-target="#add-contact-modal">
+        Add a contact 
+      </button>
+    </div>
+  </div>
+{% endblock %}

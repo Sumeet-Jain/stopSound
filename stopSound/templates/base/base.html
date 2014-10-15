@@ -1,0 +1,51 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Theta Tau Nu Class Stop Sound Project">
+    <meta name="author" content="TT Nu Class">
+    <title> Stop Sound </title>
+    <!-- Bootstrap core CSS -->
+    <link href="{% static "bower_components/bootstrap/dist/css/bootstrap.min.css" %}" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">StopSound</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="{% if request.path == '/' %} active {% endif %}"><a href="/">Home</a></li>
+            <li class="{% if request.path|slice:":9" == "/contacts" %} active {% endif %}"><a href="contacts/view_all">Contact</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+    </div>
+
+    <img src="{% static "img/spinner.gif" %}" style="display: none">
+
+    <script src="{% static "bower_components/jquery/dist/jquery.min.js" %}"> </script>
+    <script src="{% static "bower_components/bootstrap/dist/js/bootstrap.min.js" %}"> </script>
+    <script src="{% static "js/contacts.js" %}"> </script>
+    <script src="{% static "bower_components/jquery-serialize-object/dist/jquery.serialize-object.min.js" %}"> </script>
+    <script src="{% static "bower_components/jquery-cookie/jquery.cookie.js" %}"> </script>
+  </body>
+</html>
