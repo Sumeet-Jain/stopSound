@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
     // Following block of code is to allow ajax post requests w/ csrf tokens
+    // Copy-pasted this from django website
     var csrftoken = $.cookie('csrftoken');
     
     function showSpinner() {
@@ -47,21 +48,39 @@ $(document).ready(function () {
         if ($('#spinner-modal').css('display') != 'none') {
             $.get('/contacts/add_contact/', function (resp) {
                 $('#spinner-modal').hide();
-                $('#contact-form').append(resp);
+                $('#add-contact-form').append(resp);
             });
         }
     });
 
-    $('#submit-contact-form').click(function (e) {
-        var form = $('#contact-form'),
-            form_data = $('#contact-form').serializeObject();
+    $('.edit-contact').click(function (e) {
+        var form = $('#edit-contact-form'),
+            spinner = $('#edit-spinner-modal'),
+            id;
 
+        spinner.show()
+
+        id = $(this).parent().next().val()
+
+        $.get('/contacts/edit/' + id + '/', function (resp) {
+            $('#edit-spinner-modal').hide();
+            form.html(resp);
+            form.data({id: id})
+        });
+    });
+    
+    function ajax_modal_request(form_id, url) {
+        var form = $(form_id),
+            form_data = form.serializeObject();
+
+        // Adds USA country code to the phone number if the number doesn't have a country code
+        // Pretty fragile check. Doesn't account for whitespace in front of +
         if (form_data.phone_number[0] != '+') {
             form_data.phone_number = '+1 ' + form_data.phone_number
         }
 
         showSpinner();
-        $.post('/contacts/add_contact/', form_data, function (resp) {
+        $.post(url, form_data, function (resp) {
             if (resp == 'Success') {
                 window.location.href = "/contacts/view_all/"
             } else {
@@ -69,6 +88,16 @@ $(document).ready(function () {
             }
             hideSpinner();
         });
+    }
+
+    $('#submit-edit-contact-form').click(function (e) {
+        var id = $('#edit-contact-form').data('id');
+        ajax_modal_request('#edit-contact-form', '/contacts/edit/' + id + '/')
+        e.preventDefault();
+    });
+
+    $('#submit-add-contact-form').click(function (e) {
+        ajax_modal_request('#add-contact-form', '/contacts/add_contact/');
         e.preventDefault();
     });
 })

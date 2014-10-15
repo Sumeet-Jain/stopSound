@@ -43,3 +43,19 @@ def add_contact(request):
         form = ContactForm()
 
     return render(request, 'contacts/add_contact.html', {'form': form})
+
+def edit_contact(request, id_):
+    # Consider merging above and this view
+    contact = Contact.objects.get(pk=id_)
+
+    if request.method == "POST":
+        form = ContactForm(request.POST, instance=contact)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successfully edited a contact')
+            return HttpResponse('Success')
+    else:
+        form = ContactForm(instance=contact)
+
+    return render(request, 'contacts/add_contact.html', {'form': form})
+

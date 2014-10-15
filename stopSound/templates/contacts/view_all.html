@@ -18,6 +18,12 @@
               <td> {{ contact.name }} </td>
               <td> {{ contact.phone_number }} </td>
               <td> {{ contact.is_active }} </td>
+              <td> 
+                <button type="button" class="btn btn-default edit-contact" data-toggle="modal" data-target="#edit-contact-modal"> 
+                  Edit
+                </button> 
+              </td>
+              <input type="hidden" value="{{ contact.pk }}">
             </tr>
             {% endfor %}
           </tbody>
@@ -25,6 +31,7 @@
       </div>
     </div>
 
+  {# Add contact modal #}
   <div class="modal fade" id="add-contact-modal">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -33,17 +40,39 @@
           <h4 class="modal-title">Add new contact</h4>
         </div>
         <div class="modal-body">
-          <form id="contact-form" method="post" action='{% url "add_contact" %}'>
+          <form id="add-contact-form" method="post">
             <img id="spinner-modal" src="{% static "img/spinner.gif" %}"> </img>
           </form>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <input id="submit-contact-form" type="submit" class="btn btn-primary" value="Save contact">
+          <input id="submit-add-contact-form" type="submit" class="btn btn-primary" value="Save contact">
         </div>
       </div>
     </div>
   </div>
+
+  {# Edit Contact Modal #}
+  <div class="modal fade" id="edit-contact-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title"> Edit Contact </h4>
+        </div>
+        <div class="modal-body">
+          <form id="edit-contact-form" method="post">
+            <img id="edit-spinner-modal" src="{% static "img/spinner.gif" %}"> </img>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <input id="submit-edit-contact-form" type="submit" class="btn btn-primary" value="Edit contact">
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <div class="row">
     <div class="col-md-4">
