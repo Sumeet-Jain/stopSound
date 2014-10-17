@@ -30,8 +30,9 @@ class UserManager(BaseUserManager):
             last_name=last_name,
             password=password,
         )
-        user.is_admin = True
+        user.is_superuser = True
         user.save(using=self._db)
+        print "FOO BAR"
         return user
 
 class User(AbstractBaseUser):
@@ -43,6 +44,7 @@ class User(AbstractBaseUser):
     first_name = models.CharField(max_length=100, null=True)
     last_name = models.CharField(max_length=100, null=True)
     contact_info = models.ForeignKey('contacts.Contact', null=True)
+    is_superuser = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']

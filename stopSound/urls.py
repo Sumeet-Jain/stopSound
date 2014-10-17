@@ -10,5 +10,6 @@ urlpatterns = patterns('',
     url(r'^auth/', include('django.contrib.auth.urls')),
     url(r'^auth/', include('users.urls')),
     url(r'^contacts/', include('contacts.urls')),
+    url(r'^access_denied/$', 'stopSound.views.denied', name="access_denied"),
     url(r'^$', 'stopSound.views.home', name='home')
 )

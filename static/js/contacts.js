@@ -100,4 +100,10 @@ $(document).ready(function () {
         ajax_modal_request('#add-contact-form', '/contacts/add_contact/');
         e.preventDefault();
     });
+
+    $('#send-messages').submit(function (e) {
+        if (!confirm("Are you sure you want to send a message to every active member?")) {
+            e.preventDefault();
+        }
+    });
 })

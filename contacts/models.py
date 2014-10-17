@@ -1,4 +1,3 @@
-import json
 import os
 
 from django.db import models
@@ -16,8 +15,7 @@ class Contact(models.Model):
 
     def send_text(self):
         voice.login(email=EMAIL, passwd=PASSWORD)
-        voice.send_sms(str(self.phone_number), "You have been notified by stop sound to shut up")
+        voice.send_sms(str(self.phone_number), "Dear %s, Stop Sound says: SHUT THE FUCK UP" % self.name)
 
 class Settings(models.Model):
-
     sound_level = models.IntegerField()
