@@ -5,8 +5,9 @@ from django.db import models
 from googlevoice import Voice
 from phonenumber_field.modelfields import PhoneNumberField
 
-EMAIL = os.environ['GV_EMAIL']
-PASSWORD = os.environ['GV_PW']
+EMAIL = os.environ.get('GV_EMAIL')
+PASSWORD = os.environ.get('GV_PW')
+voice = Voice()
 
 class Contact(models.Model):
     name = models.CharField(max_length=100)

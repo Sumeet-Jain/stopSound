@@ -1,1 +1,1 @@
-web: guincorn stopSound/stopSound/wsgi.py
+web: python manage.py runserver

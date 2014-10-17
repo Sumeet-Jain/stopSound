@@ -8,3 +8,9 @@ runserver:
 
 shell:
 	foreman run python manage.py shell
+
+migrate:
+	foreman run python manage.py migrate
+
+syncdb:
+	foreman run python manage.py syncdb
