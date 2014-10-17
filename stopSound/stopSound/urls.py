@@ -8,6 +8,7 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^auth/', include('django.contrib.auth.urls')),
+    url(r'^auth/', include('users.urls')),
     url(r'^contacts/', include('contacts.urls')),
     url(r'^$', 'stopSound.views.home', name='home')
 )

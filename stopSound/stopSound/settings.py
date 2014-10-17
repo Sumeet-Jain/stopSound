@@ -54,6 +54,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'phonenumber_field',
     'bootstrapform',
+    'users',
     'contacts'
 )
 
@@ -107,3 +108,6 @@ STATICFILES_DIRS = (
 MESSAGE_TAGS = {
     messages.ERROR: 'danger'
 }
+
+AUTH_USER_MODEL = 'users.User'
+LOGIN_REDIRECT_URL = '/'

@@ -5,8 +5,7 @@ from .models import Contact, Settings
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from django.shortcuts import render
 
 only_superuser_decorator = user_passes_test(lambda u: u.is_superuser)
@@ -24,6 +23,7 @@ def send_messages(request):
     resp = {'success': True}
     return HttpResponse(json.dumps(resp), content_type="application/json")
 
+@login_required
 def contacts(request):
     all_contacts = Contact.objects.all()
     context = {
@@ -32,6 +32,7 @@ def contacts(request):
     
     return render(request, 'contacts/view_all.html', context)
 
+@login_required
 def add_contact(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
@@ -44,6 +45,7 @@ def add_contact(request):
 
     return render(request, 'contacts/add_contact.html', {'form': form})
 
+@login_required
 def edit_contact(request, id_):
     # Consider merging above and this view
     contact = Contact.objects.get(pk=id_)
