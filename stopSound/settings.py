@@ -14,7 +14,7 @@ import os
 from django.contrib.messages import constants as messages
 import dj_database_url
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -85,7 +85,8 @@ DATABASES = {
     }
 }
 
-DATABASES['default'] = dj_database_url.config()
+if os.environ.get('DATABASE_URL'):
+    DATABASES['default'] = dj_database_url.config()
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
