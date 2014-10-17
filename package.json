@@ -1,14 +1,6 @@
-{
-      "name": "myapp",
-      "description": "a really cool app",
-      "version": "0.0.1",
-      "engines": {
-        "node": "0.10.x"
-      },
-     "dependencies": {
-        "bower": "0.6.x"
-     },
-     "scripts": {
-        "postinstall": "cd static && ../node_modules/bower/bin/bower install"
-    }
+"dependencies": {
+    "bower": "0.6.x"
+},
+"scripts": {
+    "postinstall": "cd static && ../node_modules/bower/bin/bower install"
 }
