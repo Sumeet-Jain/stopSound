@@ -1,14 +1,12 @@
 import json
+import os
 
 from django.db import models
 from googlevoice import Voice
 from phonenumber_field.modelfields import PhoneNumberField
 
-voice = Voice()
-with open('../screct_creds.json', 'r') as f_:
-    secrets = json.load(f_)
-    EMAIL = secrets['email']
-    PASSWORD = secrets['pw']
+EMAIL = os.environ['GV_EMAIL']
+PASSWORD = os.environ['GV_PW']
 
 class Contact(models.Model):
     name = models.CharField(max_length=100)
