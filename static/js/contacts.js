@@ -101,7 +101,7 @@ $(document).ready(function () {
         e.preventDefault();
     });
 
-    $('#send-messages').submit(function (e) {
+    $('#send-messages').click(function (e) {
         if (!confirm("Are you sure you want to send a message to every active member?")) {
             e.preventDefault();
         }

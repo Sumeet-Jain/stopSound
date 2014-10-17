@@ -3,6 +3,6 @@
 {% block content %}
 <form method="POST" action="{% url "send_messages" %}">
   {% csrf_token %}
-  <input type="submit" class="btn btn-primary" value="SEND ALL MESSAGES TO EVERY ACTIVE MEMBER">
+  <input id="send-messages" type="submit" class="btn btn-primary" value="SEND ALL MESSAGES TO EVERY ACTIVE MEMBER">
 </form>
 {% endblock %}
