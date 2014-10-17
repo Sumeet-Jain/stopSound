@@ -1,4 +1,5 @@
 import json
+import os
 
 from .forms import ContactForm
 from .models import Contact, Settings
@@ -8,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from googlevoice import Voice
 
 def only_superuser(func):
     def inner(request, *args, **kwargs):
@@ -21,13 +23,18 @@ def serialize_settings(request):
     resp = {'sound_level': settings.sound_level}
     return HttpResponse(json.dumps(resp), content_type="application/json")
 
+
 @login_required
 @only_superuser
 def send_messages(request):
     if request.method == "POST":
         contacts = Contact.objects.filter(is_active=True)
+        EMAIL = os.environ['GV_EMAIL']
+        PASSWORD = os.environ['GV_PW']
+        voice = Voice()
+        voice.login(email=EMAIL, passwd=PASSWORD)
         for contact in contacts:
-            contact.send_text()
+            contact.send_text(voice)
         messages.success(request, "Sent messages to all active members")
     return HttpResponseRedirect(reverse('before_send_messages'))
 
