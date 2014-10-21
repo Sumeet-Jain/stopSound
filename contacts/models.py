@@ -8,7 +8,7 @@ class Contact(models.Model):
     is_active = models.BooleanField(default=False)
 
     def send_text(self, voice):
-        voice.send_sms(str(self.phone_number), "Dear %s, Stop Sound says: SHUT THE FUCK UP" % self.name)
+        voice.send_sms(str(self.phone_number), "Dear %s, Stop Sound is giving you a sound warning" % self.name)
 
 class Settings(models.Model):
     sound_level = models.IntegerField()

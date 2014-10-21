@@ -81,3 +81,12 @@ def edit_contact(request, id_):
 
     return render(request, 'contacts/add_contact.html', {'form': form})
 
+@login_required
+def change_actives(request):
+    ids = set(map(int, request.POST['ids'].split()))
+    for contact in Contact.objects.all():
+        contact.is_active = contact.pk in ids
+        contact.save()
+
+    messages.success(request, 'Changed active members!')
+    return HttpResponseRedirect(reverse('view_contacts'))

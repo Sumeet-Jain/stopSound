@@ -106,4 +106,14 @@ $(document).ready(function () {
             e.preventDefault();
         }
     });
+
+    $('#save-actives').click(function (e) {
+        var ids = $('input:checked').map(function (i, input) {
+            return $(input).data('id')
+        });
+        ids = ids.toArray().join(' ');
+        $('input#active-ids').val(ids);
+    });
+
+
 })
