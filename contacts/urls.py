@@ -8,4 +8,5 @@ urlpatterns = patterns('contacts.views',
         url(r'^add_contact/$', 'add_contact', name='add_contact'),
         url(r'^change_actives/$', 'change_actives', name='change_actives'),
         url(r'^edit/(\d+)/$', 'edit_contact', name='edit_contact'),
+        url(r'^get_actives/$', 'get_actives', name='get_actives'),
 )

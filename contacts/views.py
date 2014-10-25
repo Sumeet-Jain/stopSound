@@ -44,6 +44,13 @@ def before_send_messages(request):
     return render(request, "contacts/send_messages.html")
 
 @login_required
+def get_actives(request):
+    contacts = Contact.objects.filter(is_active=True)
+    contacts_dict = {contact.name: str(contact.phone_number) for contact in contacts}
+    return HttpResponse(json.dumps(contacts_dict), content_type="application/json")
+
+
+@login_required
 def contacts(request):
     all_contacts = Contact.objects.all()
     context = {
