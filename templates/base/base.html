@@ -8,9 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Theta Tau Nu Class Stop Sound Project">
     <meta name="author" content="TT Nu Class">
-    <title> Stop Sound </title>
-    <!-- Bootstrap core CSS -->
-    <link href="{% static "bower_components/bootstrap/dist/css/bootstrap.min.css" %}" rel="stylesheet">
+    <title> Stop Sound </title> <!-- Bootstrap core CSS --> <link href="{% static "bower_components/bootstrap/dist/css/bootstrap.min.css" %}" rel="stylesheet">
   </head>
 
   <body>
@@ -28,9 +26,9 @@
             <li class="{% if request.path == "/contacts/view_all/" %} active {% endif %}">
               <a href="{% url "view_contacts" %}">Contact</a>
             </li>
-            <li class="{% if request.path == '/contacts/maybe_send/' %} active {% endif %}">
-              <a href={% url "before_send_messages" %}> Send Messages </a>
-            </li>
+            <li class="{% if request.path == '/contacts/view_settings/' %} active {% endif %}">
+              <a href="{% url "view_settings" %}"> Settings </a>
+            <li>
           </ul>
           <ul class="nav navbar-nav pull-right">
             {% if request.user.is_authenticated %}

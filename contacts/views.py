@@ -1,7 +1,7 @@
 import json
 import os
 
-from .forms import ContactForm
+from .forms import ContactForm, ChooseASettingForm
 from .models import Contact, Settings
 
 from django.contrib import messages
@@ -19,8 +19,8 @@ def only_superuser(func):
     return inner
 
 def serialize_settings(request):
-    settings = Settings.objects.filter(is_active=True)
-    resp = {'sound_level': settings.sound_level}
+    settings = Settings.objects.get(is_active=True)
+    resp = {'sound_level': settings.sound_level, 'name': settings.name}
     return HttpResponse(json.dumps(resp), content_type="application/json")
 
 
@@ -97,3 +97,20 @@ def change_actives(request):
 
     messages.success(request, 'Changed active members!')
     return HttpResponseRedirect(reverse('view_contacts'))
+
+@login_required
+def choose_settings(request):
+    if request.method == "POST":
+        form = ChooseASettingForm(request.POST)
+        if form.is_valid():
+            setting_id = form.cleaned_data['choice']
+            setting = Settings.objects.get(pk=setting_id)
+            setting.is_active = True
+            setting.save()
+            messages.success(request, 'Successfully changed the sound settings')
+            return HttpResponseRedirect(reverse('view_settings'))
+    else:
+        active_setting = Settings.objects.get(is_active=True)
+        form = ChooseASettingForm(initial={'choice': active_setting.pk})
+
+    return render(request, 'contacts/settings.html', {'form': form})
