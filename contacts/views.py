@@ -103,7 +103,7 @@ def choose_settings(request):
     if request.method == "POST":
         form = ChooseASettingForm(request.POST)
         if form.is_valid():
-            setting_id = form.cleaned_data['choice']
+            setting_id = int(form.cleaned_data['choice'])
             setting = Settings.objects.get(pk=setting_id)
             setting.is_active = True
             setting.save()
