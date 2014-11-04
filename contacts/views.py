@@ -18,10 +18,12 @@ def only_superuser(func):
         return func(request, *args, **kwargs)
     return inner
 
+
 def serialize_settings(request):
     settings = Settings.objects.get(is_active=True)
     resp = {'sound_level': settings.sound_level, 'name': settings.name}
     return HttpResponse(json.dumps(resp), content_type="application/json")
+
 
 @login_required
 @only_superuser
@@ -59,6 +61,7 @@ def send_messages(request):
 def before_send_messages(request):
     return render(request, "contacts/send_messages.html")
 
+
 @login_required
 def get_actives(request):
     contacts = Contact.objects.filter(is_active=True)
@@ -75,6 +78,7 @@ def contacts(request):
     
     return render(request, 'contacts/view_all.html', context)
 
+
 @login_required
 def add_contact(request):
     if request.method == "POST":
@@ -87,6 +91,7 @@ def add_contact(request):
         form = ContactForm()
 
     return render(request, 'contacts/add_contact.html', {'form': form})
+
 
 @login_required
 def edit_contact(request, id_):
@@ -104,6 +109,7 @@ def edit_contact(request, id_):
 
     return render(request, 'contacts/add_contact.html', {'form': form})
 
+
 @login_required
 def change_actives(request):
     ids = set(map(int, request.POST['ids'].split()))
@@ -113,6 +119,7 @@ def change_actives(request):
 
     messages.success(request, 'Changed active members!')
     return HttpResponseRedirect(reverse('view_contacts'))
+
 
 @login_required
 def choose_settings(request):
