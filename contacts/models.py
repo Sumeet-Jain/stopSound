@@ -7,8 +7,6 @@ class Contact(models.Model):
     phone_number = PhoneNumberField()
     is_active = models.BooleanField(default=False)
 
-    def send_text(self, voice):
-        voice.send_sms(str(self.phone_number), "Dear %s, Stop Sound is giving you a sound warning" % self.name)
 
 class Settings(models.Model):
     name = models.CharField(max_length=100)

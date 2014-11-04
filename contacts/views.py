@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from googlevoice import Voice
+from twilio.rest import TwilioRestClient
 
 def only_superuser(func):
     def inner(request, *args, **kwargs):
@@ -22,6 +22,22 @@ def serialize_settings(request):
     settings = Settings.objects.get(is_active=True)
     resp = {'sound_level': settings.sound_level, 'name': settings.name}
     return HttpResponse(json.dumps(resp), content_type="application/json")
+
+@login_required
+@only_superuser
+def send_messages_json(request):
+    contacts = Contact.objects.filter(is_active=True)
+    account_sid = os.environ['TWILIO_SID']
+    auth_token = os.environ['TWILIO_TOKEN']
+    twilio_number = os.environ['TWILIO_NUMBER']
+    client = TwilioRestClient(account_sid, auth_token)
+    for contact in contacts:
+        message = client.messages.create(
+            to=str(contact.phone_number),
+            from_=twilio_number,
+            body="Hello {0}, You are being notified by stop sound. You may be too loud".format(contact.name),
+        )
+    return HttpResponse(json.dumps({'message': 'sucesss'}), content_type="application/json")
 
 
 @login_required
