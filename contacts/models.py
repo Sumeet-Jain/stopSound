@@ -9,7 +9,7 @@ class Contact(models.Model):
 
 
 class Settings(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=300)
     sound_level = models.FloatField()
     is_active = models.BooleanField(default=False)
 
