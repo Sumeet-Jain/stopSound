@@ -1,5 +1,4 @@
 Django==1.7
-PyAudio==0.2.8
 argparse==1.2.1
 beautifulsoup4==4.3.2
 dj-database-url==0.3.0
