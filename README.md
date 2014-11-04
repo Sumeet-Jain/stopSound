@@ -7,7 +7,7 @@ and sends out text messages to alert your neighbors to quiet down.
 
 This is the Django web app that manages your contacts and settings for Stop Sound. It acts as a contact store that allows you to easily activate and deactivate the people you want to send text messages to. 
 
-We deployed this application on heroku. View it [here](stopsound.herokuapp.com)
+We deployed this application on heroku. View it [here](http://stopsound.herokuapp.com)
 
 
 Setting up your Dev Environmnet
