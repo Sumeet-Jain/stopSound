@@ -1,8 +1,8 @@
 import json
 import os
 
-from .forms import ContactForm, ChooseASettingForm
-from .models import Contact, Settings
+from .forms import ContactForm, ChooseAdvanceSettingForm, ChooseASettingForm, UpdateGlobalForm
+from .models import Contact, GlobalSettings, Settings
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -21,8 +21,32 @@ def only_superuser(func):
 
 def serialize_settings(request):
     settings = Settings.objects.get(is_active=True)
-    resp = {'sound_level': settings.sound_level, 'name': settings.name}
+    global_settings = GlobalSettings.objects.all()[0]
+    resp = {'sound_coefficent': settings.sound_level, 'name': settings.name}
+    resp['threshold_method'] = global_settings.current_option
+    resp['sound_level'] = global_settings.sound_level
+    use_sound = ((global_settings.current_use_count and global_settings.current_option == 'auto-save') or
+                global_settings.current_option == 'manual')
+    resp['use_website_sound'] = use_sound
+    resp['count'] = global_settings.current_use_count
     return HttpResponse(json.dumps(resp), content_type="application/json")
+
+
+@login_required
+def update_settings(request):
+    if request.method == "POST":
+        global_settings = GlobalSettings.objects.all()[0]
+        form = UpdateGlobalForm(request.POST, instance=global_settings)
+        if form.is_valid():
+            form.save()
+            global_settings.current_use_count += 1
+            global_settings.save()
+            print "VALID FORM"
+            messages.success(request, 'Successfully changed the sound settings')
+    else:
+        form = UpdateGlobalForm()
+
+    return render(request, 'contacts/update_settings.html', {'form': form})
 
 
 @login_required
@@ -41,20 +65,6 @@ def send_messages_json(request):
         )
     return HttpResponse(json.dumps({'message': 'sucesss'}), content_type="application/json")
 
-
-@login_required
-@only_superuser
-def send_messages(request):
-    if request.method == "POST":
-        contacts = Contact.objects.filter(is_active=True)
-        EMAIL = os.environ['GV_EMAIL']
-        PASSWORD = os.environ['GV_PW']
-        voice = Voice()
-        voice.login(email=EMAIL, passwd=PASSWORD)
-        for contact in contacts:
-            contact.send_text(voice)
-        messages.success(request, "Sent messages to all active members")
-    return HttpResponseRedirect(reverse('before_send_messages'))
 
 @login_required
 @only_superuser
@@ -137,3 +147,22 @@ def choose_settings(request):
         form = ChooseASettingForm(initial={'choice': active_setting.pk})
 
     return render(request, 'contacts/settings.html', {'form': form})
+
+@login_required
+def choose_advanced_settings(request):
+    if request.method == "POST":
+        form = ChooseAdvanceSettingForm(request.POST)
+        if form.is_valid():
+            setting_choice = form.cleaned_data['choice']
+            global_settings = GlobalSettings.objects.all()[0]
+            if global_settings.current_option != setting_choice:
+                global_settings.current_option = setting_choice
+                global_settings.current_use_count = 0
+                global_settings.save()
+            messages.success(request, 'Successfully changed the sound settings')
+            return HttpResponseRedirect(reverse('advanced_settings'))
+    else:
+        active_setting = GlobalSettings.objects.all()[0]
+        form = ChooseAdvanceSettingForm(initial={'choice': active_setting.current_option})
+
+    return render(request, 'contacts/advanced_settings.html', {'form': form})

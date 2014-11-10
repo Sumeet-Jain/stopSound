@@ -1,10 +1,12 @@
 from django.core.management.base import BaseCommand
-from contacts.models import Settings
+from contacts.models import GlobalSettings, Settings
 
 class Command(BaseCommand):
     help = 'Creates three initial sound settings'
 
     def handle(self, *args, **options):
+        if GlobalSettings.objects.count() == 0:
+            GlobalSettings.objects.create(current_option='auto')
         Settings.objects.all().delete()
         sensitive_name = "Sensitive -- monitors sound near ambient threshold. Use for quiet study sessions."
         sorta_name = "Sort of Sensitive -- monitors sound about 1.5 times the ambient threshold. Use for medium situations."

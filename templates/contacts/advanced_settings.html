@@ -1,0 +1,10 @@
+{% extends "base/base.html" %}
+{%  load bootstrap %}
+
+{% block content %}
+<form method="POST" action="{% url "advanced_settings" %}">
+  {% csrf_token %}
+  {{form|bootstrap}}
+  <input type="submit" class="btn btn-primary" value="Change Sound Detection Setting">
+</form>
+{% endblock %}

@@ -23,3 +23,8 @@ class Settings(models.Model):
             except Settings.DoesNotExist:
                 pass
         super(Settings, self).save(*args, **kwargs) 
+
+class GlobalSettings(models.Model):
+    current_option = models.CharField(max_length=200)
+    current_use_count = models.IntegerField(default=0)
+    sound_level = models.FloatField(null=True)

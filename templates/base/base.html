@@ -35,6 +35,9 @@
             <li class="{% if request.path == '/contacts/view_settings/' %} active {% endif %}">
               <a href="{% url "view_settings" %}"> Settings </a>
             <li>
+            <li class="{% if request.path == '/contacts/advanced_settings/' %} active {% endif %}">
+              <a href="{% url "advanced_settings" %}"> More Settings </a>
+            <li>
           </ul>
           <ul class="nav navbar-nav pull-right">
             {% if request.user.is_authenticated %}
