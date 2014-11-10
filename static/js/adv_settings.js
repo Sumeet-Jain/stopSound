@@ -16,7 +16,7 @@ $(document).ready(function () {
         move_sound_widget.call(this)
     });
 
-    $('[value=auto']).click(function (e) {
+    $('[value=auto]').click(function (e) {
         $('#id_sound_level').hide()
     });
 
