@@ -19,6 +19,7 @@ class ChooseAdvanceSettingForm(forms.Form):
     }
     CHOICES = CHOICES.items()
     choice = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
+    sound_level = forms.FloatField(widget=forms.HiddenInput, required=False)
 
 
 class UpdateGlobalForm(forms.ModelForm):

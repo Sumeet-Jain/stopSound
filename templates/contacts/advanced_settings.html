@@ -1,5 +1,6 @@
 {% extends "base/base.html" %}
 {%  load bootstrap %}
+{% load staticfiles %}
 
 {% block content %}
 <form method="POST" action="{% url "advanced_settings" %}">
@@ -7,4 +8,9 @@
   {{form|bootstrap}}
   <input type="submit" class="btn btn-primary" value="Change Sound Detection Setting">
 </form>
+{% endblock %}
+
+
+{% block more_js %}
+<script src="{% static "js/adv_settings.js" %}"> </script>
 {% endblock %}

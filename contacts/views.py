@@ -150,19 +150,25 @@ def choose_settings(request):
 
 @login_required
 def choose_advanced_settings(request):
+    global_settings = GlobalSettings.objects.all()[0]
     if request.method == "POST":
         form = ChooseAdvanceSettingForm(request.POST)
         if form.is_valid():
             setting_choice = form.cleaned_data['choice']
-            global_settings = GlobalSettings.objects.all()[0]
-            if global_settings.current_option != setting_choice:
+            if global_settings.current_option != setting_choice or setting_choice == 'manual':
                 global_settings.current_option = setting_choice
+                if setting_choice == 'manual':
+                    global_settings.sound_level = form.cleaned_data['sound_level']
                 global_settings.current_use_count = 0
                 global_settings.save()
             messages.success(request, 'Successfully changed the sound settings')
             return HttpResponseRedirect(reverse('advanced_settings'))
     else:
-        active_setting = GlobalSettings.objects.all()[0]
-        form = ChooseAdvanceSettingForm(initial={'choice': active_setting.current_option})
+        curr_sound_level = global_settings.sound_level or 0
+        initial = {
+            'choice': global_settings.current_option,
+            'sound_level': curr_sound_level
+        }
+        form = ChooseAdvanceSettingForm(initial=initial)
 
     return render(request, 'contacts/advanced_settings.html', {'form': form})
