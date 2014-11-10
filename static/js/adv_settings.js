@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var manual_choice = document.getElementById('id_choice_2');
+    var manual_choice = document.querySelector('[value=manual]');
 
     function move_sound_widget(e) {
         var sound_widget = document.getElementById('id_sound_level');
@@ -12,15 +12,15 @@ $(document).ready(function () {
 
     move_sound_widget.call(manual_choice);
 
-    $('#id_choice_2').click(function (e) {
+    $(manual_choice).click(function (e) {
         move_sound_widget.call(this)
     });
 
-    $('#id_choice_1').click(function (e) {
+    $('[value=auto']).click(function (e) {
         $('#id_sound_level').hide()
     });
 
-    $('#id_choice_0').click(function (e) {
+    $('[value=auto-save]').click(function (e) {
         $('#id_sound_level').hide()
     });
 });
